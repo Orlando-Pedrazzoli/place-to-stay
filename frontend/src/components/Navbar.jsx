@@ -5,11 +5,19 @@ import {
   Box,
   IconButton,
   Typography,
+  Button,
 } from '@mui/material';
-import { Menu } from '@mui/icons-material';
+import { Menu, Lock } from '@mui/icons-material';
 import React from 'react';
 
+import { useValue } from '../context/ContextProvider';
+import UserIcons from './user/UserIcons';
+
 const Navbar = () => {
+  const {
+    state: { currentUser },
+    dispatch,
+  } = useValue();
   return (
     <AppBar>
       <Container maxWidth='lg'>
@@ -35,6 +43,17 @@ const Navbar = () => {
           >
             Welcome
           </Typography>
+          {!currentUser ? (
+            <Button
+              color='inherit'
+              startIcon={<Lock />}
+              onClick={() => dispatch({ type: 'OPEN_LOGIN' })}
+            >
+              Login
+            </Button>
+          ) : (
+            <UserIcons />
+          )}
         </Toolbar>
       </Container>
     </AppBar>
